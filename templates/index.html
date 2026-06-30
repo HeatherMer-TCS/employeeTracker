@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Employee Tracker</title>
+        <link rel="stylesheet" href="/static/styles.css">
+    </head>
+    <body>
+        <h1>Employee Database Management System</h1>
+        <div class="card">
+            <h2>View Employees</h2>
+            <p>Click the button below to view employees.</p>
+            <a href="/employees"><button type="button">View Employees</button></a>
+        </div>
+        <hr>
+            {% if message %}
+                {% if message_type == 'error' %}
+                    <p style="color: red;">{{ message }}</p>
+                {% else %}
+                    <p style="color: green;">{{ message }}</p>
+                {% endif %}
+            {% endif %}
+        <div class="form-row">
+            <div class="card">
+                <form method="post" action="/employees/new">
+                    <h2>Add Employee</h2>
+                    <input name="first_name" type="text" placeholder="First Name"><br>
+                    <input name="last_name" type="text" placeholder="Last Name"><br>
+                    <input name="email" type="text" placeholder="Email"><br>
+                    <input name="phone_number" type="text" placeholder="Phone Number"><br>
+                    <input name="hire_date" type="text" placeholder="Hire Date (YYYY-MM-DD)" pattern="\d{4}-\d{2}-\d{2}"><br>
+                    <input name="job_id" type="text" placeholder="Job ID"><br>
+                    <input name="salary" type="text" placeholder="Salary"><br>
+                    <input name="commission_pct" type="text" placeholder="Commission Pct"><br>
+                    <input name="manager_id" type="text" placeholder="Manager ID"><br>
+                    <input name="department_id" type="text" placeholder="Department ID"><br><br>
+                    <button type="submit">Add Employee</button>
+                </form>
+            </div>
+            <div class="card">
+                <form method="post" action="/employees/update">
+                    <h2>Update Employee</h2>
+                    <input name="employee_id" type="text" placeholder="Employee ID" required value="{{ update_employee.employee_id }}"><br>
+                    <input name="first_name" type="text" placeholder="First Name" value="{{ update_employee.first_name }}"><br>
+                    <input name="last_name" type="text" placeholder="Last Name" value="{{ update_employee.last_name }}"><br>
+                    <input name="email" type="text" placeholder="Email" value="{{ update_employee.email }}"><br>
+                    <input name="phone_number" type="text" placeholder="Phone Number" value="{{ update_employee.phone_number }}"><br>
+                    <input name="hire_date" type="text" placeholder="Hire Date (YYYY-MM-DD)" pattern="\d{4}-\d{2}-\d{2}" value="{{ update_employee.hire_date }}"><br>
+                    <input name="job_id" type="text" placeholder="Job ID" value="{{ update_employee.job_id }}"><br>
+                    <input name="salary" type="text" placeholder="Salary" value="{{ update_employee.salary }}"><br>
+                    <input name="commission_pct" type="text" placeholder="Commission Pct" value="{{ update_employee.commission_pct }}"><br>
+                    <input name="manager_id" type="text" placeholder="Manager ID" value="{{ update_employee.manager_id }}"><br>
+                    <input name="department_id" type="text" placeholder="Department ID" value="{{ update_employee.department_id }}"><br><br>
+                    <button type="submit">Update Employee</button>
+                </form>
+            </div>
+            <div class="card">
+                <form method="post" action="/employees/delete">
+                    <h2>Remove Employee</h2>
+                    <input name="employee_id" type="text" placeholder="Employee ID" required value="{{ delete_employee_id }}"><br>
+                    <input name="confirm" type="text" placeholder="Type 'DELETE' to confirm" required><br><br>
+                    <button type="submit">Remove Employee</button>
+                </form>
+            </div>
+        </div>
+        
+    </body>
+    
+</html>

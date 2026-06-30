@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Employees</title>
+        <link rel="stylesheet" href="/static/styles.css">
+    </head>
+    <body>
+        <div class="data-card">
+            <h2>Employee Directory</h2>
+            <p>{{ count }} employees</p>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Hire Date</th>
+                        <th>Job ID</th>
+                        <th>Salary</th>
+                        <th>Commission</th>
+                        <th>Manager</th>
+                        <th>Department</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr class="filter-row">
+                        <th><input data-col="0" class="col-filter" placeholder="Filter"></th>
+                        <th><input data-col="1" class="col-filter" placeholder="Filter"></th>
+                        <th><input data-col="2" class="col-filter" placeholder="Filter"></th>
+                        <th><input data-col="3" class="col-filter" placeholder="Filter"></th>
+                        <th><input data-col="4" class="col-filter" placeholder="Filter"></th>
+                        <th><input data-col="5" class="col-filter" placeholder="Filter"></th>
+                        <th><input data-col="6" class="col-filter" placeholder="Filter"></th>
+                        <th><input data-col="7" class="col-filter" placeholder="Filter"></th>
+                        <th><input data-col="8" class="col-filter" placeholder="Filter"></th>
+                        <th><input data-col="9" class="col-filter" placeholder="Filter"></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% macro display(value) %}
+                    {% if value is none or value == '' or value == 'None' %}
+                        -
+                    {% else %}
+                        {{ value }}
+                    {% endif %}
+                {% endmacro %}
+                {% for employee in employees %}
+                    <tr>
+                        <td>{{ display(employee.employee_id) }}</td>
+                        <td>{{ display(employee.first_name) }} {{ display(employee.last_name) }}</td>
+                        <td>{{ display(employee.email) }}</td>
+                        <td>{{ display(employee.phone_number) }}</td>
+                        <td>{{ display(employee.hire_date) }}</td>
+                        <td>{{ display(employee.job_id) }}</td>
+                        <td>{{ display(employee.salary) }}</td>
+                        <td>{{ display(employee.commission_pct) }}</td>
+                        <td>{{ display(employee.manager_id) }}</td>
+                        <td>{{ display(employee.department_id) }}</td>
+                        <td>
+                            <a href="{{ url_for('index', update_employee_id=employee.employee_id, first_name=employee.first_name, last_name=employee.last_name, email=employee.email, phone_number=employee.phone_number, hire_date=employee.hire_date, job_id=employee.job_id, salary=employee.salary, commission_pct=employee.commission_pct, manager_id=employee.manager_id, department_id=employee.department_id) }}"><button type="button">Update</button></a>
+                            <a href="{{ url_for('index', delete_employee_id=employee.employee_id) }}"><button type="button">Remove</button></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <a href="/">Back to dashboard</a>
+
+        <script>
+        (function(){
+            const table = document.querySelector('.data-table');
+            if(!table) return;
+            const filterInputs = table.querySelectorAll('thead .filter-row .col-filter');
+
+            function applyFilters(){
+                const filters = Array.from(filterInputs).map(i=>i.value.trim().toLowerCase());
+                const rows = table.tBodies[0].rows;
+                for(let r of rows){
+                    let show = true;
+                    for(let ci=0; ci<filters.length; ci++){
+                        const f = filters[ci];
+                        if(!f) continue;
+                        const cell = r.cells[ci];
+                        const text = cell ? cell.textContent.trim().toLowerCase() : '';
+                        if(!text.includes(f)) { show = false; break; }
+                    }
+                    r.style.display = show ? '' : 'none';
+                }
+            }
+
+            filterInputs.forEach(i=> i.addEventListener('input', applyFilters));
+        })();
+        </script>
+    </body>
+</html>
