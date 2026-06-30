@@ -10,6 +10,8 @@ Features:
 - Live filtering across all employee fields
 - Optional JSON API for employee data
 
+For ease of use, one does not need to memorize employee IDs in order to update/delete an employee. The "update" and "remove" actions listed in the employee table redirect the user back to the homepage with the employee information pre-filled in the "Update Employee" or "Delete Employee" field(s).
+
 ## Requirements
 
 - Python 3.9 or newer
