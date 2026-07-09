@@ -25,16 +25,16 @@
                         <th>Actions</th>
                     </tr>
                     <tr class="filter-row">
-                        <th><input data-col="0" class="col-filter" placeholder="Filter"></th>
-                        <th><input data-col="1" class="col-filter" placeholder="Filter"></th>
-                        <th><input data-col="2" class="col-filter" placeholder="Filter"></th>
-                        <th><input data-col="3" class="col-filter" placeholder="Filter"></th>
-                        <th><input data-col="4" class="col-filter" placeholder="Filter"></th>
-                        <th><input data-col="5" class="col-filter" placeholder="Filter"></th>
-                        <th><input data-col="6" class="col-filter" placeholder="Filter"></th>
-                        <th><input data-col="7" class="col-filter" placeholder="Filter"></th>
-                        <th><input data-col="8" class="col-filter" placeholder="Filter"></th>
-                        <th><input data-col="9" class="col-filter" placeholder="Filter"></th>
+                        <th><input class="col-filter" style="width: 60px;" placeholder="Filter"></th> <!-- ID -->
+                        <th><input class="col-filter" placeholder="Filter"></th> <!-- Name -->
+                        <th><input class="col-filter" placeholder="Filter"></th> <!-- Email -->
+                        <th><input class="col-filter" placeholder="Filter"></th> <!-- Phone -->
+                        <th><input class="col-filter" placeholder="Filter"></th> <!-- Hire Date -->
+                        <th><input class="col-filter" placeholder="Filter"></th> <!-- Job ID -->
+                        <th><input class="col-filter" placeholder="Filter"></th> <!-- Salary -->
+                        <th><input class="col-filter" placeholder="Filter"></th> <!-- Commission -->
+                        <th><input class="col-filter" style="width: 60px;" placeholder="Filter"></th> <!-- Manager -->
+                        <th><input class="col-filter" style="width: 80px;" placeholder="Filter"></th> <!-- Department -->
                         <th></th>
                     </tr>
                 </thead>
@@ -73,25 +73,31 @@
         (function(){
             const table = document.querySelector('.data-table');
             if(!table) return;
+            
             const filterInputs = table.querySelectorAll('thead .filter-row .col-filter');
 
             function applyFilters(){
-                const filters = Array.from(filterInputs).map(i=>i.value.trim().toLowerCase());
+                const filters = Array.from(filterInputs).map(i => i.value.trim().toLowerCase());
                 const rows = table.tBodies[0].rows;
-                for(let r of rows){
+                for (let row of rows) {
                     let show = true;
-                    for(let ci=0; ci<filters.length; ci++){
+
+                    for(let ci = 0; ci < filters.length; ci++){
                         const f = filters[ci];
-                        if(!f) continue;
-                        const cell = r.cells[ci];
+                        if (!f) continue;
+                        
+                        const cell = row.cells[ci];
                         const text = cell ? cell.textContent.trim().toLowerCase() : '';
-                        if(!text.includes(f)) { show = false; break; }
+                        if(!text.includes(f)) { 
+                            show = false;
+                            break; 
+                        }
                     }
-                    r.style.display = show ? '' : 'none';
+                    row.style.display = show ? '' : 'none';
                 }
             }
 
-            filterInputs.forEach(i=> i.addEventListener('input', applyFilters));
+            filterInputs.forEach(i => i.addEventListener('input', applyFilters));
         })();
         </script>
     </body>
