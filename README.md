@@ -16,7 +16,6 @@ For ease of use, one does not need to memorize employee IDs in order to update/d
 
 - Python 3.9 or newer
 - `flask` package
-- `requests` package (declared dependency in `pyproject.toml`)
 - Optional: `uv` for running scripts with `uv run`
 
 ## Setup
@@ -33,7 +32,7 @@ python -m venv .venv
 2. Install dependencies:
 
 ```powershell
-python -m pip install flask
+python -m pip install -r requirements.txt
 ```
 
 **Using uv:**
